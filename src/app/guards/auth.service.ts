@@ -3,17 +3,18 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080'; // Replace with your actual API URL
+  private baseUrl = environment.apiUrl;
   private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string): Observable<boolean> {
     return this.http
-      .post(`${this.baseUrl}/api/auth/login`, { username, password }, { observe: 'response' })
+      .post(`${this.baseUrl}/login`, { username, password }, { observe: 'response' })
       .pipe(
         map((res: HttpResponse<any>) => {
           const token = res.body?.token;

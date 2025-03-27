@@ -1,1 +1,28 @@
-<p>portfolio works!</p>
+<div class="portfolio-wrapper">
+    <h2>My Portfolio</h2>
+  
+    <div *ngIf="loading">Loading portfolio...</div>
+    <div *ngIf="error">{{ error }}</div>
+  
+    <table *ngIf="!loading && !error">
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Shares</th>
+          <th>Average Cost</th>
+          <th>Current Price</th>
+          <th>Total Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pos of positions">
+          <td>{{ pos.symbol }}</td>
+          <td>{{ pos.quantity }}</td>
+          <td>{{ pos.averageCost | number:'1.2-2' }}</td>
+          <td>{{ pos.currentPrice || 'N/A' }}</td>
+          <td>{{ pos.totalValue | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

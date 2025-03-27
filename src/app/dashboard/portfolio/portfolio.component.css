@@ -1,0 +1,18 @@
+.portfolio-wrapper {
+    margin: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  th {
+    background-color: #f0f0f0;
+  }
+  td {
+    text-align: center;
+  }
