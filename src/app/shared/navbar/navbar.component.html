@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <div class="navbar-title">SentiMarket</div>
+  <ul class="navbar-links">
+    <li><a routerLink="/dashboard/portfolio" routerLinkActive="active">Portfolio</a></li>
+    <li><a routerLink="/dashboard/news" routerLinkActive="active">News</a></li>
+    <li><a routerLink="/dashboard/token-manager" routerLinkActive="active">Token Manager</a></li>
+  </ul>
+  <div class="user-menu" *ngIf="isLoggedIn" (click)="toggleDropdown()">
+    <img [src]="avatarUrl" class="avatar" alt="User Avatar" />
+    <div class="dropdown" *ngIf="dropdownOpen">
+      <a (click)="goToProfile()">Profile</a>
+      <a (click)="logout()">Logout</a>
+    </div>
+  </div>
+</nav>

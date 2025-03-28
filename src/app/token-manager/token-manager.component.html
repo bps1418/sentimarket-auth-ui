@@ -1,0 +1,9 @@
+<div class="token-manager">
+  <h2>Robinhood Token Manager</h2>
+  <textarea [(ngModel)]="jwtToken" rows="4" placeholder="Paste your JWT token here..."></textarea>
+  <div class="buttons">
+    <button (click)="saveToken()">Save Token</button>
+    <button (click)="downloadPositions()">Trigger Position Download</button>
+  </div>
+  <p class="status">{{ statusMessage }}</p>
+</div>

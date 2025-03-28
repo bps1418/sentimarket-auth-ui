@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints';
 
 @Injectable({ providedIn: 'root' })
 export class PortfolioService {
-  private apiUrl = 'http://localhost:8080/api/robinhood/positions';
 
   constructor(private http: HttpClient) {}
 
   getPositions(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(ApiEndpoints.Robinhood.POSITIONS);
   }
 }

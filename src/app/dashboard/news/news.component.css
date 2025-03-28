@@ -1,28 +1,16 @@
-.filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-  }
-  .filters input {
-    padding: 6px;
-    font-size: 14px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-  }
-  th {
-    background-color: #f4f4f4;
-  }
-    .actions {
-        display: flex;
-        gap: 10px;
-    } 
+
+a {
+  display: inline-block;
+  max-width: 550px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a :hover {
+  display: inline-block;
+  max-width: max-content;
+  white-space: nowrap;
+  overflow: auto;
+  text-overflow: inherit;
+}

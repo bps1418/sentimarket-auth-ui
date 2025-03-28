@@ -1,65 +1,75 @@
-<div class="filters">
-    <input placeholder="Filter by ticker" [(ngModel)]="filterTicker" (ngModelChange)="applyFilters()" />
-  
-    <select [(ngModel)]="filterCategory" (ngModelChange)="applyFilters()">
+<div class="row text-small">
+  <div class="col-md-2">
+    Ticker:
+    <input placeholder="Filter by ticker" [(ngModel)]="filterTicker" (ngModelChange)="applyFilters()" class="form-control"/>  
+  </div>
+  <div class="col-md-2">
+    Category:
+    <select [(ngModel)]="filterCategory" (ngModelChange)="applyFilters()" class="form-control">
       <option value="">All Categories</option>
       <option *ngFor="let cat of categoryOptions" [value]="cat">{{ cat }}</option>
-    </select>
-  
-    <select [(ngModel)]="filterSource" (ngModelChange)="applyFilters()">
+    </select>  
+    </div>
+    <div class="col-md-2">
+      Sources:
+    <select [(ngModel)]="filterSource" (ngModelChange)="applyFilters()" class="form-control">
       <option value="">All Sources</option>
       <option *ngFor="let src of sourceOptions" [value]="src">{{ src }}</option>
     </select>
-  
-    <label>Min Impact Score:</label>
-    <input type="number" [(ngModel)]="filterImpactScore" (ngModelChange)="applyFilters()" min="0" step="0.1" />
-  
-    <label>From:</label>
-    <input type="date" [(ngModel)]="filterStartDate" (ngModelChange)="applyFilters()" />
-  
-    <label>To:</label>
-    <input type="date" [(ngModel)]="filterEndDate" (ngModelChange)="applyFilters()" />
-  </div>
-  
+    </div>
+    <div class="col-md-1">
+    I.S >: 
+    <input type="number" [(ngModel)]="filterImpactScore" (ngModelChange)="applyFilters()" min="0" step="0.1" class="form-control"/>  
+    </div>
+    <div class="col-md-2">
+    From: 
+    <input type="date" [(ngModel)]="filterStartDate" (ngModelChange)="applyFilters()" class="form-control"/>
+    </div>
+    <div class="col-md-2">
+    To: 
+    <input type="date" [(ngModel)]="filterEndDate" (ngModelChange)="applyFilters()" class="form-control"/>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
+    </div>
+  </div>  
   <!-- Stats Display -->
-  <div class="stats">
-    <p><strong>Total News:</strong> {{ totalNews }}</p>
-    <p><strong>Average Impact Score:</strong> {{ averageImpactScore | number: '1.2-2' }}</p>
-    <p><strong>Impact Score Std Dev:</strong> {{ impactScoreStdDev | number: '1.2-2' }}</p>
-  </div>
+    Total News: {{ totalNews }}&nbsp;Average Impact Score: {{ averageImpactScore | number: '1.2-2' }}
+    Impact Score Std Dev: {{ impactScoreStdDev | number: '1.2-2' }}
   
-  <table *ngIf="paginatedNews.length">
+  <table *ngIf="paginatedNews.length" class="table table-sm">
     <thead>
       <tr>
-        <th (click)="changeSort('headline')">Headline</th>
-        <th (click)="changeSort('ticker')">Ticker</th>
-        <th (click)="changeSort('category')">Category</th>
-        <th>Sentiment (GPT)</th>
-        <th>FinBERT</th>
-        <th>Mistral</th>
-        <th (click)="changeSort('impactScore')">Impact</th>
-        <th (click)="changeSort('source')">Source</th>
-        <th (click)="changeSort('datetime')">Date</th>
+        <th (click)="changeSort('headline')" scope="col">Headline</th>
+        <th (click)="changeSort('ticker')" scope="col">Ticker</th>
+        <th (click)="changeSort('category')" scope="col">Category</th>
+        <th scope="col">Sentiment (GPT)</th>
+        <th scope="col">FinBERT</th>
+        <th scope="col">Mistral</th>
+        <th (click)="changeSort('impactScore')" scope="col">Impact</th>
+        <th (click)="changeSort('source')" scope="col">Source</th>
+        <th (click)="changeSort('datetime')" scope="col">Date</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of paginatedNews">
-        <td><a [href]="item.url" target="_blank">{{ item.headline }}</a></td>
-        <td>{{ item.ticker }}</td>
-        <td>{{ item.category || 'N/A' }}</td>
-        <td>{{ item.sentimentGpt }}</td>
-        <td>{{ item.sentimentFinbert }}</td>
-        <td>{{ item.sentimentMistral }}</td>
-        <td>{{ item.impactScore !== null ? item.impactScore : 'N/A' }}</td>
-        <td>{{ item.source }}</td>
-        <td>{{ item.datetime | date: 'short' }}</td>
+        <td scope="row" data-toggle="tooltip" data-placement="top" title="{{ item.headline }}"><a [href]="item.url" target="_blank" >{{ item.headline }}</a></td>
+        <td scope="row">{{ item.ticker }}</td>
+        <td scope="row">{{ item.category || 'N/A' }}</td>
+        <td scope="row">{{ item.sentimentGpt }}</td>
+        <td scope="row">{{ item.sentimentFinbert }}</td>
+        <td scope="row">{{ item.sentimentMistral }}</td>
+        <td scope="row">{{ item.impactScore !== null ? item.impactScore : 'N/A' }}</td>
+        <td scope="row">{{ item.source }}</td>
+        <td scope="row">{{ item.datetime | date: 'short' }}</td>
       </tr>
     </tbody>
   </table>
-  
   <!-- Pagination -->
-  <div class="pagination" *ngIf="filteredNews.length > pageSize">
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= filteredNews.length / pageSize">Next</button>
+  <div class="Page navigation" *ngIf="filteredNews.length > pageSize">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="changePage(currentPage - 1)" href="#">Previous</a></li>
+      <li class="primary">Page {{ currentPage }} of {{ totalPages }}</li>
+      <li class="page-item"><a class="page-link" (click)="changePage(currentPage + 1)" href="#">Previous</a></li>
+    </ul>
   </div>
